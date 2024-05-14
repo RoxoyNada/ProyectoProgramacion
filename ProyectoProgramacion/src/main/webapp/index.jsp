@@ -7,10 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<<<<<<< HEAD
-	<h1>HOLa MUNDO</h1>
-=======
+
 	<h1>HOLA MUNDO</h1>
->>>>>>> branch 'master' of https://github.com/RoxoyNada/ProyectoProgramacion.git
+
 </body>
 </html>
