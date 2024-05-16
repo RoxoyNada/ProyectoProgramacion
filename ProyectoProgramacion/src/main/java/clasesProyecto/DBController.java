@@ -172,5 +172,26 @@ public class DBController {
 		return lventas;
 	}
 	
+	public ArrayList<Disco> nDiscosMasVendidos(int numero) {
+		ArrayList<Disco> discos = new ArrayList<Disco>();
+		String sql = "SELECT nombre FROM discos WHERE idDisco in (select l.idDisco from lventas as l GROUP BY l.idDisco ORDER BY (sum(l.unidades)) DESC limit '"+numero+"')";
+		
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				discos.add(disco);
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return discos;
+	}
+	
 	
 }
