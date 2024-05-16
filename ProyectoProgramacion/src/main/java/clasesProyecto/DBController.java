@@ -42,6 +42,62 @@ public class DBController {
 		this.conexion = conexion;
 	}
 	
+	public void altaDisco(Disco d) {
+		String sql = "Insert INTO discos set nombre = '"+d.getNombre()+"' , idGrupo = '"+d.getIdGrupo()+"' , fecha = '"+d.getFecha()+"' , precio = '"+d.getPrecio()+"', descripcion = '"+d.getDescripcion()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void altaCliente(Cliente c) {
+		String sql = "Insert INTO clientes set nombre = '"+c.getNombre()+"' , apellidos = '"+c.getApellidos()+"' , dni = '"+c.getDni()+"' , direccion = '"+c.getDireccion()+"', telefono = '"+c.getTelefono()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void modificarCliente() {
+		
+	}
+	
+	public void modificarDisco(Cliente c) {
+		String sql = "UPDATE clientes set nombre = '"+ c.getNombre()+"', apellidos = '"+ c.getApellidos()+"' , direccion = '"+ c.getDireccion()+"', dni = '"+ c.getDni()+"', telefono = '"+ c.getTelefono()+"' WHERE idCliente = '"+ c.getIdCliente()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	public ArrayList<Venta> dameVentasCliente(int idCliente) {
+		String sql = "SELECT * FROM ventas WHERE idClieente = '"+idCliente+"'"; 
+		ArrayList<Venta> ventas = new ArrayList<Venta>();
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while (rs.next()) {
+				int idVenta = rs.getInt("idVenta");
+				Venta venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), dameLventasDisco(idVenta));
+				ventas.add(venta);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ventas;
+	}
+	
 	
 	public ArrayList<Disco> todosDiscos(){
 		ArrayList<Disco> discos = new ArrayList<Disco>();
@@ -107,6 +163,12 @@ public class DBController {
 		return clientes;
 	}
 	
+	public Cliente dameCliente(int id) {
+		Cliente cliente = new Cliente();
+		
+		return cliente;
+	}
+	
 	public ArrayList<Venta> todosVentas(){
 		ArrayList<Venta> ventas = new ArrayList<Venta>();
 		String sql = "Select * FROM ventas";
@@ -116,7 +178,7 @@ public class DBController {
 			
 			while (rs.next()) {
 				int idVenta = rs.getInt("idVenta");
-				Venta venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), lineasVenta(idVenta));
+				Venta venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), dameLventasDisco(idVenta));
 				ventas.add(venta);
 			}
 			rs.close();
@@ -150,9 +212,9 @@ public class DBController {
 		return grupos;
 	}
 	
-	public ArrayList<LVenta> lineasVenta(int idVenta){
+	public ArrayList<LVenta> dameLventasDisco(int idVenta){
 		ArrayList<LVenta> lventas = new ArrayList<LVenta>();
-		String sql = "Select * FROM lventas WHERE idLVenta = '"+idVenta+"'";
+		String sql = "Select * FROM lventas WHERE idVenta = '"+idVenta+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
 			ResultSet rs = myStatement.executeQuery(sql);
@@ -171,10 +233,10 @@ public class DBController {
 		
 		return lventas;
 	}
-	
+ 
 	public ArrayList<Disco> nDiscosMasVendidos(int numero) {
 		ArrayList<Disco> discos = new ArrayList<Disco>();
-		String sql = "SELECT nombre FROM discos WHERE idDisco in (select l.idDisco from lventas as l GROUP BY l.idDisco ORDER BY (sum(l.unidades)) DESC limit '"+numero+"')";
+		String sql = "select discos.* from discos inner join lventas as l on discos.idDisco = l.idDisco GROUP BY l.idDisco ORDER BY (sum(l.unidades)) DESC limit '"+numero+"')";
 		
 		try {
 			Statement myStatement = this.conexion.createStatement();
