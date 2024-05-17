@@ -32,8 +32,6 @@ public class DBController {
 		this.conexion = conexion;
 	}
 
-
-	
 	public Connection getConexion() {
 		return conexion;
 	}
@@ -63,11 +61,141 @@ public class DBController {
 		
 	}
 	
-	public void modificarCliente() {
-		
+	public void altaVenta(Venta v) {
+		String sql = "Insert INTO ventas set fechaVenta = '"+v.getFechaVenta()+"' , idCliente = '"+v.getIdCliente()+"' , precioVenta = '"+v.getPrecioVenta()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public void modificarDisco(Cliente c) {
+	public void altaGrupo(Grupo g) {
+		String sql = "Insert INTO grupos set nombre = '"+g.getNombre()+"' , pais = '"+g.getPais()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block*/
+			e.printStackTrace();
+		}
+	}
+	
+	public void altaCancion(Cancion c) {
+		String sql = "Insert INTO canciones set titulo = '"+c.getTitulo()+"' , duracion = '"+c.getDuracion()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block*/
+			e.printStackTrace();
+		}
+	}
+	
+	public void altaLVenta(LVenta l) {
+		String sql = "Insert INTO lventas set idVenta = '"+l.getIdVenta()+"' , idDisco = '"+l.getIdDisco()+"' , precioLinea = '"+l.getPrecioLinea()+"' , unidades = '"+l.getUnidades()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block*/
+			e.printStackTrace();
+		}
+	}
+	
+	public void altaEsta(int idCancion, int idDisco) {
+		String sql = "Insert INTO esta set idDisco = '"+idDisco+"' , idCancion = '"+idCancion+"'/";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void bajaDisco(int idDisco) {
+		String sql = "DELETE FROM  discos WHERE  idDisco = '"+idDisco+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void bajaCliente(int idCliente) {
+		String sql = "DELETE FROM  clientes WHERE  idCliente = '"+idCliente+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean existeDisco(int idDisco) {
+		String sql = "select * FROM  discos WHERE  idDisco = '"+idDisco+"'";
+		boolean esta = false;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while(rs.next()) {
+				esta = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return esta;
+	}
+	
+	public boolean existeGrupo(int idGrupo) {
+		String sql = "select * FROM  grupos WHERE  idGrupo = '"+idGrupo+"'";
+		boolean esta = false;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while(rs.next()) {
+				esta = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return esta;
+	}
+	
+	public boolean existeCancion(int idCancion) {
+		String sql = "select * FROM  canciones WHERE  idCancion = '"+idCancion+"'";
+		boolean esta = false;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while(rs.next()) {
+				esta = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return esta;
+	}
+	
+	public boolean existeCliente(int idCliente) {
+		String sql = "select * FROM  clientes WHERE  idCliente = '"+idCliente+"'";
+		boolean esta = false;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while(rs.next()) {
+				esta = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return esta;
+	}
+	
+	public void modificarCliente(Cliente c) {
 		String sql = "UPDATE clientes set nombre = '"+ c.getNombre()+"', apellidos = '"+ c.getApellidos()+"' , direccion = '"+ c.getDireccion()+"', dni = '"+ c.getDni()+"', telefono = '"+ c.getTelefono()+"' WHERE idCliente = '"+ c.getIdCliente()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
@@ -77,7 +205,15 @@ public class DBController {
 		}
 	}
 	
-	
+	public void modificarDisco(Disco d) {
+		String sql = "UPDATE discos set nombre = '"+ d.getNombre()+"', fecha = '"+ d.getFecha()+"' , igGrup = '"+ d.getIdGrupo()+"', precio = '"+ d.getPrecio()+"', descripcion = '"+ d.getDescripcion()+"' WHERE idDisco = '"+ d.getIdDisco()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public ArrayList<Venta> dameVentasCliente(int idCliente) {
 		String sql = "SELECT * FROM ventas WHERE idClieente = '"+idCliente+"'"; 
@@ -97,7 +233,6 @@ public class DBController {
 		
 		return ventas;
 	}
-	
 	
 	public ArrayList<Disco> todosDiscos(){
 		ArrayList<Disco> discos = new ArrayList<Disco>();
@@ -121,6 +256,89 @@ public class DBController {
 		return discos;
 	}
 	
+	public ArrayList<Disco> dameDiscosAnno(int anno){
+		ArrayList<Disco> discos = new ArrayList<Disco>();
+		String sql = "Select * FROM discos WHERE YEAR (discos.fecha) = "+anno;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				discos.add(disco);
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return discos;
+	}
+	
+	public ArrayList<Disco> dameDiscosRangoPrecio(int precioMin, int precioMax){
+		ArrayList<Disco> discos = new ArrayList<Disco>();
+		String sql = "SELECT * FROM discos WHERE precio BETWEEN '"+precioMin+"' and '"+precioMax+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				discos.add(disco);
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return discos;
+	}
+	
+	public int dameNumDiscosGrupo(int idGrup) {
+		String sql = "SELECT COUNT(*) FROM discos WHERE idGrup ="+idGrup;
+		int cantidad = 0;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				cantidad = rs.getInt("suma");
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cantidad;
+	}
+	
+	public ArrayList<LVenta> dameLVentasDisco(int idDisco){
+		ArrayList<LVenta> lventas = new ArrayList<LVenta>();
+		String sql = "Select * FROM lventas WHERE idDisco = '"+idDisco+"' order by idVenta";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				LVenta lventa = new LVenta(rs.getInt("idLVenta"), rs.getInt("idVenta"), rs.getInt("unidades"),rs.getFloat("precioLinea"),rs.getInt("idDiscos"));
+				lventas.add(lventa);
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	return lventas;
+}
 	public ArrayList<Cancion> todasCanciones(){
 		ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 		String sql = "Select * FROM canciones";
@@ -254,6 +472,5 @@ public class DBController {
 		}
 		return discos;
 	}
-	
-	
+
 }
