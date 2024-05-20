@@ -40,31 +40,57 @@ public class DBController {
 		this.conexion = conexion;
 	}
 	
-	public void altaDisco(Disco d) {
+	public boolean eliminarCliente( int id) {
+		Boolean correcto = false;
+		String sql = "DELETE FROM clientes where idCliente = '"+id+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			correcto = true;
+			myStatement.execute(sql);
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return correcto;
+	}
+	
+	public boolean altaDisco(Disco d) {
+		Boolean correcto = false;
 		String sql = "Insert INTO discos set nombre = '"+d.getNombre()+"' , idGrupo = '"+d.getIdGrupo()+"' , fecha = '"+d.getFecha()+"' , precio = '"+d.getPrecio()+"', descripcion = '"+d.getDescripcion()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			correcto = true;
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return correcto;
 	}
 	
-	public void altaCliente(Cliente c) {
+	public boolean altaCliente(Cliente c) {
+		Boolean correcto = false;
 		String sql = "Insert INTO clientes set nombre = '"+c.getNombre()+"' , apellidos = '"+c.getApellidos()+"' , dni = '"+c.getDni()+"' , direccion = '"+c.getDireccion()+"', telefono = '"+c.getTelefono()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			correcto = true;
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return correcto;
 	}
 	
 	public void altaVenta(Venta v) {
 		String sql = "Insert INTO ventas set fechaVenta = '"+v.getFechaVenta()+"' , idCliente = '"+v.getIdCliente()+"' , precioVenta = '"+v.getPrecioVenta()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,6 +101,8 @@ public class DBController {
 		String sql = "Insert INTO grupos set nombre = '"+g.getNombre()+"' , pais = '"+g.getPais()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block*/
 			e.printStackTrace();
@@ -85,6 +113,8 @@ public class DBController {
 		String sql = "Insert INTO canciones set titulo = '"+c.getTitulo()+"' , duracion = '"+c.getDuracion()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block*/
 			e.printStackTrace();
@@ -95,6 +125,8 @@ public class DBController {
 		String sql = "Insert INTO lventas set idVenta = '"+l.getIdVenta()+"' , idDisco = '"+l.getIdDisco()+"' , precioLinea = '"+l.getPrecioLinea()+"' , unidades = '"+l.getUnidades()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block*/
 			e.printStackTrace();
@@ -105,6 +137,8 @@ public class DBController {
 		String sql = "Insert INTO esta set idDisco = '"+idDisco+"' , idCancion = '"+idCancion+"'/";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -115,6 +149,8 @@ public class DBController {
 		String sql = "DELETE FROM  discos WHERE  idDisco = '"+idDisco+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,6 +161,8 @@ public class DBController {
 		String sql = "DELETE FROM  clientes WHERE  idCliente = '"+idCliente+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,6 +178,8 @@ public class DBController {
 			while(rs.next()) {
 				esta = true;
 			}
+			rs.close();
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,6 +196,8 @@ public class DBController {
 			while(rs.next()) {
 				esta = true;
 			}
+			rs.close();
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,6 +214,8 @@ public class DBController {
 			while(rs.next()) {
 				esta = true;
 			}
+			rs.close();
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,6 +232,8 @@ public class DBController {
 			while(rs.next()) {
 				esta = true;
 			}
+			rs.close();
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -195,20 +241,45 @@ public class DBController {
 		return esta;
 	}
 	
-	public void modificarCliente(Cliente c) {
-		String sql = "UPDATE clientes set nombre = '"+ c.getNombre()+"', apellidos = '"+ c.getApellidos()+"' , direccion = '"+ c.getDireccion()+"', dni = '"+ c.getDni()+"', telefono = '"+ c.getTelefono()+"' WHERE idCliente = '"+ c.getIdCliente()+"'";
+	public boolean existeVenta(int idVenta) {
+		String sql = "select * FROM  ventas WHERE  idVenta = '"+idVenta+"'";
+		boolean esta = false;
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while(rs.next()) {
+				esta = true;
+			}
+			rs.close();
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return esta;
+	}
+	
+	public boolean modificarCliente(Cliente c) {
+		Boolean correcto = false;
+		String sql = "UPDATE clientes set nombre = '"+ c.getNombre()+"', apellidos = '"+ c.getApellidos()+"' , direccion = '"+ c.getDireccion()+"', dni = '"+ c.getDni()+"', telefono = '"+ c.getTelefono()+"' WHERE idCliente = '"+ c.getIdCliente()+"'";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			correcto = true;
+			myStatement.execute(sql);
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return correcto;
 	}
 	
 	public void modificarDisco(Disco d) {
 		String sql = "UPDATE discos set nombre = '"+ d.getNombre()+"', fecha = '"+ d.getFecha()+"' , igGrup = '"+ d.getIdGrupo()+"', precio = '"+ d.getPrecio()+"', descripcion = '"+ d.getDescripcion()+"' WHERE idDisco = '"+ d.getIdDisco()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			myStatement.execute(sql);
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -226,6 +297,8 @@ public class DBController {
 				Venta venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), dameLventasDisco(idVenta));
 				ventas.add(venta);
 			}
+			rs.close();
+			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
