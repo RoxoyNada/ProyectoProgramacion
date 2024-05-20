@@ -57,7 +57,7 @@ public class DBController {
 	
 	public boolean altaDisco(Disco d) {
 		Boolean correcto = false;
-		String sql = "Insert INTO discos set nombre = '"+d.getNombre()+"' , idGrupo = '"+d.getIdGrupo()+"' , fecha = '"+d.getFecha()+"' , precio = '"+d.getPrecio()+"', descripcion = '"+d.getDescripcion()+"'";
+		String sql = "Insert INTO discos set nombre = '"+d.getNombre()+"' , idGrup = '"+d.getIdGrupo()+"' , fecha = '"+d.getFecha()+"' , precio = '"+d.getPrecio()+"', descripcion = '"+d.getDescripcion()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
 			correcto = true;
@@ -274,16 +274,19 @@ public class DBController {
 		return correcto;
 	}
 	
-	public void modificarDisco(Disco d) {
+	public boolean modificarDisco(Disco d) {
+		Boolean correcto = false;
 		String sql = "UPDATE discos set nombre = '"+ d.getNombre()+"', fecha = '"+ d.getFecha()+"' , igGrup = '"+ d.getIdGrupo()+"', precio = '"+ d.getPrecio()+"', descripcion = '"+ d.getDescripcion()+"' WHERE idDisco = '"+ d.getIdDisco()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
+			correcto = true;
 			myStatement.execute(sql);
 			myStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return correcto;
 	}
 	
 	public ArrayList<Venta> dameVentasCliente(int idCliente) {
