@@ -14,7 +14,7 @@ DBController  controlador = new DBController();
 String resultado = "";
 boolean correcto = false;
 
-if(pagina.equalsIgnoreCase("clientes.jsp")){
+if(pagina.equalsIgnoreCase("clientesAdmin.jsp")){
 	String opcion = request.getParameter("accion");
 	
 	if(opcion.equalsIgnoreCase("eliminar")){ //eliminar cliente
@@ -39,23 +39,23 @@ if(pagina.equalsIgnoreCase("clientes.jsp")){
 			correcto = controlador.altaCliente(c);
 		}
 		
-		String destino = "clientes.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "clientesAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
 		response.sendRedirect(destino);
 	}
 	
-}else if(pagina.equalsIgnoreCase("productos.jsp")){
+}else if(pagina.equalsIgnoreCase("discosAdmin.jsp")){
 	String opcion = request.getParameter("accion");
-	if(opcion.equalsIgnoreCase("eliminar")){ //eliminar producto
-		String codigo = request.getParameter("codProducto");
+	if(opcion.equalsIgnoreCase("eliminar")){ //eliminar disco
+		String codigo = request.getParameter("idDisco");
 		int codDisco = Integer.parseInt(codigo);
 		if(controlador.existeDisco(codDisco)){
 			controlador.bajaDisco(codDisco);
 		}
-		String destino = "productos.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
 		response.sendRedirect(destino);
 		
-	}else{ //añadir producto 
-		String codigo = request.getParameter("codProducto");
+	}else{ //añadir disco 
+		String codigo = request.getParameter("idDisco");
 		int codDisco = Integer.parseInt(codigo);
 		if(controlador.existeDisco(codDisco) == false){
 			String nombre = request.getParameter("nombre");
@@ -67,7 +67,7 @@ if(pagina.equalsIgnoreCase("clientes.jsp")){
 			correcto = controlador.altaDisco(d);
 		}
 		
-		String destino = "productos.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
 		response.sendRedirect(destino);
 	}
 	
@@ -101,14 +101,25 @@ if(pagina.equalsIgnoreCase("clientes.jsp")){
 		correcto = controlador.modificarCliente(c);
 	}
 	
-	String destino = "modificarCliente.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+	String destino = "clientesAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
 	response.sendRedirect(destino);
 	
 	
-}else if(pagina.equalsIgnoreCase("modificarProducto.jsp")){
+}else if(pagina.equalsIgnoreCase("modificarDisco.jsp")){
+	String codigo = request.getParameter("codProducto");
+	int codProducto = Integer.parseInt(codigo);
+	if(controlador.existeCliente(codProducto) == false){
+		String nombre = request.getParameter("nombre");
+		float precio = Float.parseFloat(request.getParameter("precio")) ;
+		String descripcion = request.getParameter("descripcion");
+		String fecha = request.getParameter("fecha");
+		int idGrupo = Integer.parseInt(request.getParameter("idGrupo")) ;
+		Disco d = new Disco(codProducto, nombre, fecha,idGrupo,precio, descripcion);
+		correcto = controlador.modificarDisco(d);
+	}
 	
-	
-	String destino = "modificarProducto.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+	String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+	response.sendRedirect(destino);
 }
 
 
