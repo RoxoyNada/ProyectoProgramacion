@@ -354,6 +354,28 @@ public class DBController {
 		return discos;
 	}
 	
+	public ArrayList<Disco> dameDiscosRecientes(){
+		ArrayList<Disco> discos = new ArrayList<Disco>();
+		String sql = "Select * FROM discos  ORDER BY discos.fecha desc ";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				discos.add(disco);
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return discos;
+	}
+	
 	public ArrayList<Disco> dameDiscosRangoPrecio(int precioMin, int precioMax){
 		ArrayList<Disco> discos = new ArrayList<Disco>();
 		String sql = "SELECT * FROM discos WHERE precio BETWEEN '"+precioMin+"' and '"+precioMax+"'";
