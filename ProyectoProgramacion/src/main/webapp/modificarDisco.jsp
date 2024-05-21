@@ -74,7 +74,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index2.html" class="nav-item nav-link active">Home</a>
+                            <a href="index.html" class="nav-item nav-link active">Home</a>
                             <a href="tienda.html" class="nav-item nav-link">Productos</a>
                             <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
                             <a href="ventas.html" class="nav-item nav-link">Ventas</a>
@@ -99,7 +99,7 @@
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="index2.html">Home</a>
+                    <a class="breadcrumb-item text-dark" href="index.html">Home</a>
                     <a class="breadcrumb-item active" href="discosAdmin.html">Discos</a>
                     <span class="breadcrumb-item active">Modificar Disco</span>
                 </nav>
@@ -174,7 +174,7 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="index2.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
                             <a class="text-secondary mb-2" href="tienda.html"><i class="fa fa-angle-right mr-2"></i>Productos</a>
                             <a class="text-secondary mb-2" href="clientes.html"><i class="fa fa-angle-right mr-2"></i>Nuestros Clientes</a>
                             <a class="text-secondary mb-2" href="ventas.html"><i class="fa fa-angle-right mr-2"></i>Ventas</a>
