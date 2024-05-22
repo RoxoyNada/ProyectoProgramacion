@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+  
+    <%@ page import = "java.util.*" %>
+    <%@ page import = "clasesProyecto.*" %>
+
+
 <!DOCTYPE html>
 <html>
 
-
+<% DBController controlador = new DBController(); %>
 <head>
     <meta charset="utf-8">
     <title>MultiShop - Online Shop Website Template</title>
@@ -17,7 +22,7 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
-
+ 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
@@ -30,7 +35,6 @@
 </head>
 
 <body>
-
     <!-- Topbar Start -->
     
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
@@ -53,7 +57,7 @@
                 </form>
             </div>
             <div class="col-lg-4 col-6 text-right">
-                <p class="m-0">Atenciï¿½n Al Cliente</p>
+                <p class="m-0">Atención Al Cliente</p>
                 <h5 class="m-0">+34 646 26 58 52</h5>
             </div>
         </div>
@@ -76,12 +80,12 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index2.html" class="nav-item nav-link active">Home</a>
-                            <a href="tienda.html" class="nav-item nav-link">Productos</a>
+                            <a href="index.jsp" class="nav-item nav-link active">Home</a>
+                            <a href="tienda.jsp" class="nav-item nav-link">Productos</a>
                             <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
                             <a href="ventas.html" class="nav-item nav-link">Ventas</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administraciï¿½n <i class="fa fa-angle-down mt-1"></i></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administración <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
                                     <a href="clientesAdmin.html" class="dropdown-item">Clientes</a>
                                     <a href="discosAdmin.html" class="dropdown-item">Discos</a>
@@ -111,8 +115,8 @@
                             <img class="position-absolute w-100 h-100" src="img/rock-bands-crazy.jpg" style="object-fit: cover;">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Clï¿½sicos del Rock</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Desde Chuck Berry hasta lo mï¿½s actual del panorama del rock internacional</p>
+                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Clásicos del Rock</h1>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Desde Chuck Berry hasta lo más actual del panorama del rock internacional</p>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +135,7 @@
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Grandes Exitos</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Los mï¿½s vendidos de todos los tiempos</p>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Los más vendidos de todos los tiempos</p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="tienda.html">Ver</a>
                                 </div>
                             </div>
@@ -154,7 +158,7 @@
                 <div class="product-offer mb-30" style="height: 200px;">
                     <img class="img-fluid" src="img/last-units.jpg" alt="">
                     <div class="offer-text">
-                        <h6 class="text-white text-uppercase">ï¿½ltimas unidades</h6>
+                        <h6 class="text-white text-uppercase">Últimas unidades</h6>
                         <h3 class="text-white mb-3">Hazte con una copia ya</h3>
 
                         <!-- CODIGO JAVA -->
@@ -186,7 +190,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
                     <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Polï¿½tica de devoluciï¿½n</h5>
+                    <h5 class="font-weight-semi-bold m-0">Política de devolución</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
@@ -227,7 +231,7 @@
                             <img class="img-fluid" src="img/cat-3.jpg" alt="">
                         </div>
                         <div class="flex-fill pl-3">
-                            <h6>Mï¿½s Vendidos</h6>
+                            <h6>Más Vendidos</h6>
                         </div>
                     </div>
                 </a>
@@ -250,6 +254,7 @@
     </div>
     <!-- Categories End -->
 
+
     <!-- Products Start -->
 
     <div class="container-fluid pt-5 pb-3">
@@ -258,31 +263,40 @@
 
             <!-- CODIGO JAVA -->
             <!-- 8  - 12 productos cuales quiera -->
+            <% ArrayList<Disco> discos = controlador.todosDiscos();
+            for(int i = 0; i<8; i++){%>
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                        <img class="img-fluid w-100" src="img/<%=discos.get(i).getIdDisco()%>.jpg" alt="">
                         <div class="product-action">
                                     <!-- CODIGO JAVA -->
                                     <!-- modificar href's= para que coincida con la pagina y mande los datos-->
-                                    <a class="btn btn-outline-dark btn-square" href="detalles.html"><i class="far fa-eye"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href="modDisco.html"><i class="fas fa-edit"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fas fa-trash"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="detalles.jsp?idDisco=<%=discos.get(i).getIdDisco()%>"><i class="far fa-eye"></i></a>
+                         <!--        <a class="btn btn-outline-dark btn-square" href="modDisco.html"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fas fa-trash"></i></a>  -->
                         </div>
 
                     </div>
                     <div class="text-center py-4">
                         <!-- CODIGO JAVA -->
                         <!-- modificar href= para que coincida con la pagina y mande los datos-->
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                        <a class="h6 text-decoration-none text-truncate" href=""><%=discos.get(i).getNombre() %></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                         <!-- CODIGO JAVA -->
                         <!-- CAMBIAR PRECIO SEGUN ARTICULO-->
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                        
+                            <% int desc = controlador.dameDescuentoDisco(discos.get(i).getIdDisco()); %>
+                       		 <% if (desc > 0){ %>
+                            <h5><%=discos.get(i).getPrecio() - (discos.get(i).getPrecio() * desc / 100)%>$</h5><h6 class="text-muted ml-2"><del><%=discos.get(i).getPrecio()%>$</del></h6>
+                            <%}else{ %>
+                            	<h5><%=discos.get(i).getPrecio() %>$</h5>
+                            <%} %>
                         </div>
                     </div>
                 </div>
             </div>
+            <%} %>
         </div>
     </div>
     <!-- Products End -->
@@ -307,7 +321,7 @@
                 <div class="product-offer mb-30" style="height: 300px;">
                     <img class="img-fluid" src="img/last-units.jpg" alt="">
                     <div class="offer-text">
-                        <h6 class="text-white text-uppercase">ï¿½ltimas Unidades</h6>
+                        <h6 class="text-white text-uppercase">Últimas Unidades</h6>
                         <h3 class="text-white mb-3">Hazte con una copia ya</h3>
                         <a href="tienda.html" class="btn btn-primary">Ver</a>
                     </div>
@@ -320,32 +334,44 @@
 
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Ultimos Productos</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Últimas Unidades</span></h2>
         <div class="row px-xl-5">
             <!-- CODIGO JAVA -->
-            <!-- 6 Discos mï¿½s recientes-->
+            <!-- 6 Discos más ULTIMAS UDS-->
+            
+            <%ArrayList<Disco> discosUltimas = controlador.dameDiscosOrdenStock(); %>
+            
+            
+            <%for (int i = 0; i < 8 ; i++){ %>
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                        <img class="img-fluid w-100" src="./img/<%=discosUltimas.get(i).getIdDisco()%>.jpg" alt="">
                         <div class="product-action">
                                     <!-- CODIGO JAVA -->
                                     <!-- modificar href= para que coincida con la pagina y mande los datos-->
-                                    <a class="btn btn-outline-dark btn-square" href="detalles.html"><i class="far fa-eye"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href="modDisco.html"><i class="fas fa-edit"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-trash"></i></a>
+                                    
+                                    <a class="btn btn-outline-dark btn-square" href="detalles.jsp?idDisco =<%=discosUltimas.get(i).getIdDisco()%>"><i class="far fa-eye"></i></a>
+                            <!--        <a class="btn btn-outline-dark btn-square" href="modDisco.html"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-trash"></i></a>    -->  
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                        <a class="h6 text-decoration-none text-truncate" href=""><%=discosUltimas.get(i).getNombre()%></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                         <!-- CODIGO JAVA -->
                         <!-- CAMBIAR PRECIO SEGUN ARTICULO-->
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                        <% int desc = controlador.dameDescuentoDisco(discosUltimas.get(i).getIdDisco()); %>
+                        <% if (desc > 0){ %>
+                            <h5><%=discosUltimas.get(i).getPrecio() - (discosUltimas.get(i).getPrecio() * desc / 100)%>$</h5><h6 class="text-muted ml-2"><del><%=discosUltimas.get(i).getPrecio()%>$</del></h6>
+                            <%}else{ %>
+                            	<h5><%=discosUltimas.get(i).getPrecio() %>$</h5>
+                            <%} %>
                         </div>
                     </div>
                 </div>
             </div>
+            <%} %>
         </div>
     </div>
     <!-- Products End -->
@@ -389,9 +415,9 @@
     <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <h5 class="text-secondary text-uppercase mb-4">ï¿½Quienes Somos?</h5>
-                <p class="mb-4">Bienvenidos a Ayerdi Records &reg;: Tu destino para vinilos, CDs y ediciones especiales. Descubre la banda sonora de tus recuerdos con nosotros.  </p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Calle Donoso Cortï¿½s, 61</p>
+                <h5 class="text-secondary text-uppercase mb-4">¿Quienes Somos?</h5>
+                <p class="mb-4">Bienvenidos a Ayerdi Records: Tu destino para vinilos, CDs y ediciones especiales. Descubre la banda sonora de tus recuerdos con nosotros.  </p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Calle Donoso Cortés, 61</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>iayerdi@centronelson.org</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>rfernandez@centronelson.org</p>
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+34 646 26 58 52</p>
@@ -409,7 +435,7 @@
                     </div>
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Noticias</h5>
-                        <p>Suscribete a nuestro boletï¿½n mensual</p>
+                        <p>Suscribete a nuestro boletín mensual</p>
                         <form action="#">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Your Email Address">
@@ -432,7 +458,7 @@
         <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-secondary">
-                    &copy; <a class="text-primary" href="#">AyerdiRecords</a>. Todos los derechos reservados
+                   <a class="text-primary" href="#">AyerdiRecords</a>. Todos los derechos reservados
                     <a class="text-primary" href="https://htmlcodex.com">Ayerdi Records </a>
                 </p>
             </div>

@@ -62,7 +62,7 @@ if(request.getParameter("idVenta") != null){
                 </form>
             </div>
             <div class="col-lg-4 col-6 text-right">
-                <p class="m-0">AtenciÃ³n Al Cliente</p>
+                <p class="m-0">Atención Al Cliente</p>
                 <h5 class="m-0">+34 646 26 58 52</h5>
             </div>
         </div>
@@ -90,7 +90,7 @@ if(request.getParameter("idVenta") != null){
                             <a href="clientes.jsp" class="nav-item nav-link">Nuestros Clientes</a>
                             <a href="ventas.jsp" class="nav-item nav-link">Ventas</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">AdministraciÃ³n <i class="fa fa-angle-down mt-1"></i></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administración <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
                                     <a href="clientesAdmin.jsp" class="dropdown-item">Clientes</a>
                                     <a href="discosAdmin.jsp" class="dropdown-item">Ventas</a>
@@ -229,9 +229,9 @@ if(request.getParameter("idVenta") != null){
     <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <h5 class="text-secondary text-uppercase mb-4">Â¿Quienes Somos?</h5>
+                <h5 class="text-secondary text-uppercase mb-4">¿Quienes Somos?</h5>
                 <p class="mb-4">Bienvenidos a Ayerdi Records: Tu destino para vinilos, CDs y ediciones especiales. Descubre la banda sonora de tus recuerdos con nosotros.  </p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Calle Donoso CortÃ©s, 61</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Calle Donoso Cortés, 61</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>iayerdi@centronelson.org</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>rfernandez@centronelson.org</p>
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+34 646 26 58 52</p>
@@ -249,7 +249,7 @@ if(request.getParameter("idVenta") != null){
                     </div>
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Noticias</h5>
-                        <p>Suscribete a nuestro boletÃ­n mensual</p>
+                        <p>Suscribete a nuestro boletín mensual</p>
                         <form action="#">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Your Email Address">

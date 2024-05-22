@@ -8,7 +8,7 @@
 <title>Proyecto Programacion</title>
 </head>
 <body>
-<% 
+<%  
 String pagina = request.getParameter("pagina");
 DBController  controlador = new DBController();
 String resultado = "";

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+  
+    <%@ page import = "java.util.*" %>
+    <%@ page import = "clasesProyecto.*" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,6 +32,7 @@
 </head>
 
 <body>
+<%DBController controlador = new DBController(); %>
     <!-- Topbar Start -->
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-4">
@@ -73,15 +77,15 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index2.html" class="nav-item nav-link active">Home</a>
-                            <a href="tienda.html" class="nav-item nav-link">Productos</a>
-                            <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
-                            <a href="ventas.html" class="nav-item nav-link">Ventas</a>
+                            <a href="index.jsp" class="nav-item nav-link active">Home</a>
+                            <a href="tienda.jsp" class="nav-item nav-link">Productos</a>
+                            <a href="clientes.jsp" class="nav-item nav-link">Nuestros Clientes</a>
+                            <a href="ventas.jsp" class="nav-item nav-link">Ventas</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administración <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <a href="clientesAdmin.html" class="dropdown-item">Clientes</a>
-                                    <a href="discosAdmin.html" class="dropdown-item">Ventas</a>
+                                    <a href="clientesAdmin.jsp" class="dropdown-item">Clientes</a>
+                                    <a href="discosAdmin.jsp" class="dropdown-item">Ventas</a>
                                 </div>
                             </div>
                         </div>         
@@ -179,28 +183,36 @@
                 <div class="row pb-3">
                     <!-- CODIGO JAVA -->
                     <!-- Bucle que recorra todos los discos-->
+                    <% ArrayList<Disco> discos = controlador.todosDiscos(); 
+                    for(Disco d : discos){%>
                     <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                                <img class="img-fluid w-100" src="img/<%=d.getIdDisco()%>.jpg" alt="">
                                 <div class="product-action">
                                     <!-- CODIGO JAVA -->
                                     <!-- modificar href= para que coincida con la pagina y mande los datos-->
-                                    <a class="btn btn-outline-dark btn-square" href="detalles.html"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="detalles.jsp?idDisco=<%=d.getIdDisco()%>"><i class="far fa-eye"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-edit"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-trash"></i></a>
                                 </div>
                             </div>
                             <div class="text-center py-4">
-                                <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                                <a class="h6 text-decoration-none text-truncate" href=""><%=d.getNombre() %></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                </div>
+							<% int desc = controlador.dameDescuentoDisco(d.getIdDisco()); %>
+                       		 <% if (desc > 0){ %>
+                            <h5><%=d.getPrecio() - (d.getPrecio() * desc / 100)%>$</h5><h6 class="text-muted ml-2"><del><%=d.getPrecio()%>$</del></h6>
+                            <%}else{ %>
+                            	<h5><%=d.getPrecio() %>$</h5>
+                            <%} %>    
+                               </div>
                             </div>
                         </div>
                     </div>
+                    <%} %>
                 </div>
-            </div>
+            </div> 
             <!-- Shop Product End -->
         </div>
     </div>
