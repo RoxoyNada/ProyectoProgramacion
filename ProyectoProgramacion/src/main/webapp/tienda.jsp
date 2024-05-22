@@ -212,7 +212,7 @@
                     </div>
                     <%} %>
                 </div>
-            </div>
+            </div> 
             <!-- Shop Product End -->
         </div>
     </div>

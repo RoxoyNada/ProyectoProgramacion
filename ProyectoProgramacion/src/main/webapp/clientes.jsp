@@ -14,7 +14,7 @@ ArrayList<Cliente> clientes = controlador.todosClientes();%>
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
-    <!-- Favicon -->
+    <!-- Favicon --> 
     <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
