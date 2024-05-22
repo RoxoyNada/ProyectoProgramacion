@@ -121,7 +121,7 @@ ArrayList<Cliente> clientes = controlador.todosClientes();%>
                 <table class="table table-light table-borderless table-hover text-center mb-0">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Nº</th>
+                            <th></th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Dni</th>
@@ -132,19 +132,19 @@ ArrayList<Cliente> clientes = controlador.todosClientes();%>
                     <tbody class="align-middle">
                         <!-- CODIGO JAVA -->
                         <!-- FOR EACH DE CADA CLIENTE COGER DATOS -->
-                        <%int cont = 1;
+                        <%
                         for (Cliente c : clientes) {
                         %>
                         
                             <tr>
-                                <td class="align-middle"><%=cont%></td>
+                                <td class="align-middle"><img style="width:70px; heigth:70px; border-radius:0.5em; box-shadow: #000 10px 1px 20px" src ="./img/Clientes/<%=c.getIdCliente()%>.jpg"></td>
                                 <td class="align-middle"><%=c.getNombre()%> </td>
                                 <td class="align-middle"><%=c.getApellidos()%></td>
                                 <td class="align-middle"><%=c.getDni()%></td>
                                 <td class="align-middle"><%=c.getDireccion()%></td>
                                 <td class="align-middle"><%=c.getTelefono()%></td>
                             </tr>
-                            <%cont++;
+                            <%
                             } %>
                         <!-- FIN -->
                     </tbody>

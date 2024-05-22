@@ -58,5 +58,13 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 	
-	
+	public boolean datosCompletos() {
+		boolean comp = true;
+		if(this.apellidos.isEmpty() || this.apellidos.isBlank() || this.nombre.isEmpty() || this.nombre.isBlank()
+				|| this.direccion.isEmpty() || this.direccion.isBlank() || this.telefono.isEmpty() || this.telefono.isBlank()
+				|| this.dni.isEmpty() || this.dni.isBlank()) {
+			comp = false;
+		}
+		return comp;
+	}
 }

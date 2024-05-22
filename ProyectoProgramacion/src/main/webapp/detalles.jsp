@@ -82,14 +82,14 @@ Disco d = controlador.dameDisco(idDisco); %>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="index.jsp" class="nav-item nav-link active">Home</a>
-                            <a href="tienda.html" class="nav-item nav-link">Productos</a>
-                            <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
-                            <a href="ventas.html" class="nav-item nav-link">Ventas</a>
+                            <a href="tienda.jsp" class="nav-item nav-link">Productos</a>
+                            <a href="clientes.jsp" class="nav-item nav-link">Nuestros Clientes</a>
+                            <a href="ventas.jsp" class="nav-item nav-link">Ventas</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administración <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <a href="clientesAdmin.html" class="dropdown-item">Clientes</a>
-                                    <a href="discosAdmin.html" class="dropdown-item">Discos</a>
+                                    <a href="clientesAdmin.jsp" class="dropdown-item">Clientes</a>
+                                    <a href="discosAdmin.jsp" class="dropdown-item">Discos</a>
                                 </div>
                             </div>
                         </div>         
@@ -105,8 +105,8 @@ Disco d = controlador.dameDisco(idDisco); %>
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="index2.html">Home</a>
-                    <a class="breadcrumb-item text-dark" href="tienda.html">Tienda</a>
+                    <a class="breadcrumb-item text-dark" href="index.jsp">Home</a>
+                    <a class="breadcrumb-item text-dark" href="tienda.jsp">Tienda</a>
                     <span class="breadcrumb-item active">Detalles</span>
                 </nav>
             </div>

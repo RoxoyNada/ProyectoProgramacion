@@ -112,25 +112,25 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
-                    <form name="modCliente" id="contactForm" novalidate="novalidate">
+                    <form action="operaciones.jsp?pagina=clientesAdmin&accion=modificar&codCliente=<%= %>" name="modCliente" id="contactForm" novalidate="novalidate">
                         <div class="control-group">
-                            <input type="text" class="form-control" id="nombre" placeholder="Nombre"
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre"
                                 required="required" data-validation-required-message="Introduzca el nombre" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="text" class="form-control" id="apellido" placeholder="Apellido"
+                            <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellido"
                                 required="required" data-validation-required-message="Introduzca el apellido" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="text" class="form-control" id="dni" placeholder="DNI"
+                            <input type="text" class="form-control" name="dni" id="dni" placeholder="DNI"
                                 required="required" data-validation-required-message="Introduzca Dni" />
                             <p class="help-block text-danger"></p>
                         </div>
 
                         <div class="control-group">
-                            <input type="tel" class="form-control" id="telefono" placeholder="Telefono"
+                            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono"
                                 required="required" data-validation-required-message="Introduzca número de telefono" />
                             <p class="help-block text-danger"></p>
                         </div>

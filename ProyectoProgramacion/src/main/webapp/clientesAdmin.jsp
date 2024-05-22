@@ -1,7 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+  
+    <%@ page import = "java.util.*" %>
+    <%@ page import = "clasesProyecto.*" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<%DBController controlador = new DBController();
+ArrayList<Cliente> clientes = controlador.todosClientes();
+String mensaje ="";
+
+if(request.getParameter("resultado") != null){
+	mensaje = request.getParameter("resultado");	
+}
+
+	%>
 
 <head>
     <meta charset="utf-8">
@@ -75,15 +87,15 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
-                                <a href="index2.html" class="nav-item nav-link active">Home</a>
-                                <a href="tienda.html" class="nav-item nav-link">Productos</a>
-                                <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
-                                <a href="ventas.html" class="nav-item nav-link">Ventas</a>
+                                <a href="index.jsp" class="nav-item nav-link active">Home</a>
+                                <a href="tienda.jsp" class="nav-item nav-link">Productos</a>
+                                <a href="clientes.jsp" class="nav-item nav-link">Nuestros Clientes</a>
+                                <a href="ventas.jsp" class="nav-item nav-link">Ventas</a>
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administración <i class="fa fa-angle-down mt-1"></i></a>
                                     <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                        <a href="clientesAdmin.html" class="dropdown-item">Clientes</a>
-                                        <a href="discosAdmin.html" class="dropdown-item">Discos</a>
+                                        <a href="clientesAdmin.jsp" class="dropdown-item">Clientes</a>
+                                        <a href="discosAdmin.jsp" class="dropdown-item">Discos</a>
                                     </div>
                                 </div>
                             </div>         
@@ -100,14 +112,14 @@
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="index2.html">Home</a>
+                    <a class="breadcrumb-item text-dark" href="index.jsp">Home</a>
                     <span class="breadcrumb-item text-dark">Nuestros Clientes</span>
                 </nav>
             </div>
         </div>
     </div>
     <!-- Breadcrumb End -->
-
+	<div style = "display: flex; align-items: center; justify-content: center; padding: 1.2rem;"><h3 style=" color:#ff0000;"><%=mensaje%></h3></div>
 
     <!-- Clientes Start -->
     <div class="container-fluid">
@@ -116,10 +128,11 @@
                 <table class="table table-light table-borderless table-hover text-center mb-0">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Nº</th>
+                            <th></th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Dni</th>
+                            <th>Dirección</th>
                             <th>Telefono</th>
                             <th colspan="2">Acciones</th>
                         </tr>
@@ -127,16 +140,24 @@
                     <tbody class="align-middle">
                         <!-- CODIGO JAVA -->
                         <!-- FOR EACH DE CADA CLIENTE COGER DATOS -->
-                        <tr>
-                            <td class="align-middle">1</td>
-                            <td class="align-middle">Rodrigo</td>
-                            <td class="align-middle">Fernández Alonso</td>
-                            <td class="align-middle">51517477F</td>
-                            <td class="align-middle">+34 671 160 834</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></td>
-                            <td class="align-middle"><a href="modCliente.html"><button class="btn btn-sm btn-edit"><img class="edit" src="./img/edit.png"></a> </td> 
-                        </tr>
-                        <!-- FIN -->
+                        <%
+                        for (Cliente c : clientes) {
+                        %>
+                        
+                            <tr>
+                                <td class="align-middle"><img style="width:70px; heigth:70px; border-radius:0.5em; box-shadow: #000 10px 1px 20px" src ="./img/Clientes/<%=c.getIdCliente()%>.jpg"></td>
+                                <td class="align-middle"><%=c.getNombre()%> </td>
+                                <td class="align-middle"><%=c.getApellidos()%></td>
+                                <td class="align-middle"><%=c.getDni()%></td>
+                                <td class="align-middle"><%=c.getDireccion()%></td>
+                                <td class="align-middle"><%=c.getTelefono()%></td>
+                                <td class="align-middle"><a href="operaciones.jsp?pagina=clientesAdmin&codCliente=<%=c.getIdCliente()%>&accion=eliminar" ><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></a> </td>
+                            	<td class="align-middle"><a href="modificarCliente.jsp?codCliente=<%=c.getIdCliente()%>"><button href="modificarCliente.jsp" class="btn btn-sm btn-edit"><img class="edit" src="./img/edit.png"></button></a> </td> 
+                      
+                            </tr>
+                            <%} %>
+                        
+                          <!-- FIN -->
                     </tbody>
                 </table>
             </div>
@@ -147,12 +168,12 @@
                 <div class="bg-light p-30 mb-5">
                     <!-- CODIGO JAVA -->
                     <!-- ACTION CAMBIAR OPERACIONES.JSP -->
-                    <form class="mb-30" action="operaciones.jsp">
+                    <form class="mb-30" action="operaciones.jsp?pagina=clientesAdmin&accion=alta">
                         <div class="input-group">
                             <input type="text" class="form-control border-0 p-4" placeholder="Nombre" id="nombre" name="nombre">
                         </div>
                         <div class="input-group">
-                            <input type="text" class="form-control border-0 p-4" placeholder="Apellidos" id="Apellidos" name="apellidos">
+                            <input type="text" class="form-control border-0 p-4" placeholder="Apellidos" id="apellidos" name="apellidos">
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control border-0 p-4" placeholder="Direccion" id="direccion" name="direccion">
@@ -191,10 +212,10 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="index2.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="tienda.html"><i class="fa fa-angle-right mr-2"></i>Productos</a>
-                            <a class="text-secondary mb-2" href="clientes.html"><i class="fa fa-angle-right mr-2"></i>Nuestros Clientes</a>
-                            <a class="text-secondary mb-2" href="ventas.html"><i class="fa fa-angle-right mr-2"></i>Ventas</a>
+                            <a class="text-secondary mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="tienda.jsp"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                            <a class="text-secondary mb-2" href="clientes.jsp"><i class="fa fa-angle-right mr-2"></i>Nuestros Clientes</a>
+                            <a class="text-secondary mb-2" href="ventas.jsp"><i class="fa fa-angle-right mr-2"></i>Ventas</a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">

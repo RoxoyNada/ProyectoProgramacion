@@ -14,7 +14,7 @@ DBController  controlador = new DBController();
 String resultado = "";
 boolean correcto = false;
 
-if(pagina.equalsIgnoreCase("clientesAdmin.jsp")){
+if(pagina.equalsIgnoreCase("clientesAdmin")){
 	String opcion = request.getParameter("accion");
 	
 	if(opcion.equalsIgnoreCase("eliminar")){ //eliminar cliente
@@ -22,28 +22,65 @@ if(pagina.equalsIgnoreCase("clientesAdmin.jsp")){
 		int codCliente = Integer.parseInt(codigo);
 		if(controlador.existeCliente(codCliente)){
 			correcto = controlador.eliminarCliente(codCliente);
+			if(correcto){
+				resultado = "Se ha eliminado correctamente";
+			}else{
+				resultado = "No se ha eliminado correctamente";
+			}
 		}
-		String destino = "clientes.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "clientes.jsp?resultado="+ resultado;
 		response.sendRedirect(destino);
 		
-	}else{ //añadir cliente
-		String codigo = request.getParameter("codCliente");
-		int codCliente = Integer.parseInt(codigo);
-		if(controlador.existeCliente(codCliente) == false){
-			String nombre = request.getParameter("nombre");
-			String apellidos = request.getParameter("apellidos");
-			String direccion = request.getParameter("direccion");
-			String telefono = request.getParameter("telefono");
-			String dni = request.getParameter("dni");
-			Cliente  c = new Cliente(0, dni, nombre, apellidos,  direccion, telefono);
-			correcto = controlador.altaCliente(c);
+	}else if(opcion.equalsIgnoreCase("alta")){ //añadir cliente
+		
+		String nombre = request.getParameter("nombre");
+		String apellidos = request.getParameter("apellidos");
+		String direccion = request.getParameter("direccion");
+		String telefono = request.getParameter("telefono");
+		String dni = request.getParameter("dni");
+		Cliente  c = new Cliente(0, dni, nombre, apellidos,  direccion, telefono);
+		correcto = controlador.altaCliente(c);
+		if(c.datosCompletos()){
+			if(correcto){
+				resultado = "Se ha dado de alta correctamente";
+			}else{
+				resultado = "No se ha dado de alta correctamente";
+			}
+		}else{
+			resultado = "Faltan campos por rellenar";
 		}
 		
-		String destino = "clientesAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "clientesAdmin.jsp?resultado="+ resultado;
+		response.sendRedirect(destino);
+	}else{
+		String codigo = request.getParameter("codCliente");
+		String nombre = request.getParameter("nombre");
+		String apellidos = request.getParameter("apellidos");
+		String direccion = request.getParameter("direccion");
+		String telefono = request.getParameter("telefono");
+		String dni = request.getParameter("dni");
+		int codCliente = Integer.parseInt(codigo);
+		Cliente  c = new Cliente(codCliente, dni, nombre, apellidos,  direccion, telefono);
+		correcto = controlador.modificarCliente(c);
+		if(c.datosCompletos()){
+			if(correcto){
+				resultado = "Se ha modificado correctamente";
+			}else{
+				resultado = "No se ha modificado correctamente";
+			}
+		}else{
+			resultado = "Faltan campos por rellenar";
+		}
+		
+		String destino = "clientesAdmin.jsp?resultado="+ resultado;
 		response.sendRedirect(destino);
 	}
 	
-}else if(pagina.equalsIgnoreCase("discosAdmin.jsp")){
+	
+	
+	
+	
+}else if(pagina.equalsIgnoreCase("discosAdmin")){
 	String opcion = request.getParameter("accion");
 	if(opcion.equalsIgnoreCase("eliminar")){ //eliminar disco
 		String codigo = request.getParameter("idDisco");
@@ -51,7 +88,7 @@ if(pagina.equalsIgnoreCase("clientesAdmin.jsp")){
 		if(controlador.existeDisco(codDisco)){
 			controlador.bajaDisco(codDisco);
 		}
-		String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado=" + correcto;
 		response.sendRedirect(destino);
 		
 	}else{ //añadir disco 
@@ -67,7 +104,7 @@ if(pagina.equalsIgnoreCase("clientesAdmin.jsp")){
 			correcto = controlador.altaDisco(d);
 		}
 		
-		String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado=" + correcto;
 		response.sendRedirect(destino);
 	}
 	
@@ -80,11 +117,11 @@ if(pagina.equalsIgnoreCase("clientesAdmin.jsp")){
 			controlador.eliminarCliente(codVenta);
 		}
 		
-		String destino = "ventas.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "ventas.jsp?pagina=operaciones.jsp&resultado=" + correcto;
 	}else{
 		
 		
-		String destino = "ventas.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+		String destino = "ventas.jsp?pagina=operaciones.jsp&resultado=" + correcto;
 	}
 	
 }else if(pagina.equalsIgnoreCase("modificarCliente.jsp")){
@@ -101,7 +138,7 @@ if(pagina.equalsIgnoreCase("clientesAdmin.jsp")){
 		correcto = controlador.modificarCliente(c);
 	}
 	
-	String destino = "clientesAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+	String destino = "clientesAdmin.jsp?pagina=operaciones.jsp&resultado=" + correcto;
 	response.sendRedirect(destino);
 	
 	
@@ -118,7 +155,7 @@ if(pagina.equalsIgnoreCase("clientesAdmin.jsp")){
 		correcto = controlador.modificarDisco(d);
 	}
 	
-	String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado =" + correcto;
+	String destino = "discosAdmin.jsp?pagina=operaciones.jsp&resultado=" + correcto;
 	response.sendRedirect(destino);
 }
 
