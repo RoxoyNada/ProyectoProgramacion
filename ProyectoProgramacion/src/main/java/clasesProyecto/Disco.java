@@ -10,7 +10,7 @@ public class Disco {
 //	PROBAR
 //	private Date fecha2; 
 
-	private int idGrup;
+	private int idGrupo;
 	private Float precio;
 	private String descripcion;
 
@@ -24,7 +24,7 @@ public class Disco {
 		this.idDisco = idDisco;
 		this.nombre = nombre;
 		this.fecha = fecha;
-		this.idGrup = idGrupo;
+		this.idGrupo = idGrupo;
 		this.precio = precio;
 		this.descripcion = descripcion;
 	}
@@ -54,11 +54,11 @@ public class Disco {
 	}
 
 	public int getIdGrupo() {
-		return idGrup;
+		return idGrupo;
 	}
 
 	public void setIdGrupo(int idGrupo) {
-		this.idGrup = idGrupo;
+		this.idGrupo = idGrupo;
 	}
 
 	public Float getPrecio() {

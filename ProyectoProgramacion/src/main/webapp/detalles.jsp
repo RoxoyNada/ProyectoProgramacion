@@ -1,8 +1,15 @@
+<%@page import="com.mysql.fabric.xmlrpc.base.Array"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@page import="clasesProyecto.*"%>
+       <%@ page import = "java.util.*" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
+<% DBController controlador = new DBController();
+int idDisco = Integer.parseInt(request.getParameter("idDisco")) ;
+Disco d = controlador.dameDisco(idDisco); %>
 <head>
     <meta charset="utf-8">
     <title>MultiShop - Online Shop Website Template</title>
@@ -74,7 +81,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index2.html" class="nav-item nav-link active">Home</a>
+                            <a href="index.jsp" class="nav-item nav-link active">Home</a>
                             <a href="tienda.html" class="nav-item nav-link">Productos</a>
                             <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
                             <a href="ventas.html" class="nav-item nav-link">Ventas</a>
@@ -108,15 +115,15 @@
     <!-- Breadcrumb End -->
 
 
-
+	
     <!-- Shop Detail Start -->
     <div class="container-fluid pb-5">
         <div class="row px-xl-5">
             <div class="col-lg-5 mb-30">
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner bg-light">
-                        <div class="carousel-item active">
-                            <img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
+                        <div class="carousel-item active" style="display: flex;">
+                            <img class="w-70 h-70" style="margin: 0 auto;"  src="./img/<%=d.getIdDisco()%>.jpg" alt="Image">
                         </div>
                     </div>
                 </div>
@@ -126,11 +133,12 @@
                 <div class="h-100 bg-light p-30">
                     <!-- CODIGO JAVA -->
                     <!-- DATOS PRODUCTO -->
-                    <h3>Product Name Goes Here</h3>
-                    <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
-                    <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
-                        clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
-                        Nonumy</p>
+                   
+                    <h3><%=d.getNombre()%></h3>
+                    <h6><%=controlador.dameGrupo(d.getIdGrupo()).getNombre()%> <%=d.getFecha()%></h6>
+                    <% int desc = controlador.dameDescuentoDisco(idDisco); %>
+                    <h3 class="font-weight-semi-bold mb-4"><%=d.getPrecio() - (d.getPrecio() * desc / 100)%>$</h3>
+                    <p class="mb-4"><%=d.getDescripcion() %></p>
                     </div>
                 </div>
             </div>
@@ -142,26 +150,28 @@
                         <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Lineas de venta</a>
                     </div>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="tab-pane-1">
-                            <table style="border: 2px solid black; ">
-                                <tr  style="border: 1px solid black; ">
-                                    <th style="border: 1px solid black; ">campo1</th>
-                                    <th style="border: 1px solid black; ">campo2</th>
-                                    <th style="border: 1px solid black; ">campo3</th>
-                                    <th style="border: 1px solid black; ">campo4</th>
-                                </tr>
-                                <tr  style="border: 1px solid black; ">
-                                    <td style="border: 1px solid black; ">data1</td>
-                                    <td style="border: 1px solid black; ">data1</td>
-                                    <td style="border: 1px solid black; ">data1</td>
-                                    <td style="border: 1px solid black; ">data1</td>
-                                </tr>
-                                <tr  style="border: 1px solid black; ">
-                                    <td style="border: 1px solid black; ">data2</td>
-                                    <td style="border: 1px solid black; ">data2</td>
-                                    <td style="border: 1px solid black; ">data2</td>
-                                    <td style="border: 1px solid black; ">data2</td>
-                                </tr>
+                        <div class="custom-table-container">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Unidades</th>
+                                        <th>Precio de Linea</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- CODIGO JAVA -->
+                                    <!-- LINEAS VENTA IDPRODUCTO-->
+                                    <% ArrayList<LVenta> lVentas = controlador.dameLVentasDisco(idDisco); 
+                                    for(int i=0; i< lVentas.size(); i++){%>
+                                    <tr>
+                                        <td><%=controlador.dameVenta(lVentas.get(i).getIdVenta()).getFechaVenta() %></td>
+                                        <td><%=lVentas.get(i).getUnidades() %></td>
+                                        <td><%=lVentas.get(i).getPrecioLinea() %></td>
+                                    </tr>
+                                    <%} %>
+                                     
+                                </tbody>
                             </table>
                         </div>
                 </div>
@@ -179,22 +189,30 @@
                 <div class="owl-carousel related-carousel">
                     <!-- CODIGO JAVA -->
                     <!-- BUCLE 5 veces cambiar img src en cada iteración -->
+                    <% ArrayList<Disco> discos = controlador.todosDiscos(); 
+                    for (Disco ds : discos){%>
                     <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                            <img class="img-fluid w-100" src="./img/<%=ds.getIdDisco()%>.jpg" alt="">
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href="detail.html"><i class="far fa-eye"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-trash"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="detalles.jsp?idDisco=<%=ds.getIdDisco()%>"><i class="far fa-eye"></i></a>
+                  <!--              <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-trash"></i></a>  -->  
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                            <a class="h6 text-decoration-none text-truncate" href=""><%=ds.getNombre() %></a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                <%  desc = controlador.dameDescuentoDisco(ds.getIdDisco()); %>
+                       		 <% if (desc > 0){ %>
+                            <h5><%=ds.getPrecio() - (ds.getPrecio() * desc / 100)%>$</h5><h6 class="text-muted ml-2"><del><%=ds.getPrecio()%>$</del></h6>
+                            <%}else{ %>
+                            	<h5><%=ds.getPrecio() %>$</h5>
+                            <%} %>
                             </div>
                         </div>
                     </div>
+                    <%} %>
                 </div> 
             </div>
         </div>
@@ -217,7 +235,7 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="index2.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
                             <a class="text-secondary mb-2" href="tienda.html"><i class="fa fa-angle-right mr-2"></i>Productos</a>
                             <a class="text-secondary mb-2" href="clientes.html"><i class="fa fa-angle-right mr-2"></i>Nuestros Clientes</a>
                             <a class="text-secondary mb-2" href="ventas.html"><i class="fa fa-angle-right mr-2"></i>Ventas</a>
@@ -248,7 +266,7 @@
         <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-secondary">
-                     <a class="text-primary" href="#">AyerdiRecords</a>. Todos los derechos reservados
+                    <a class="text-primary" href="#">AyerdiRecords</a>. Todos los derechos reservados
                     <a class="text-primary" href="https://htmlcodex.com">Ayerdi Records </a>
                 </p>
             </div>

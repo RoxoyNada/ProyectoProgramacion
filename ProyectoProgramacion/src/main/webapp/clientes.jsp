@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+  
+    <%@ page import = "java.util.*" %>
+    <%@ page import = "clasesProyecto.*" %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
+<%DBController controlador = new DBController();
+ArrayList<Cliente> clientes = controlador.todosClientes();%>
 <head>
     <meta charset="utf-8">
     <title>MultiShop - Online Shop Website Template</title>
@@ -75,15 +79,15 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index2.html" class="nav-item nav-link active">Home</a>
-                            <a href="tienda.html" class="nav-item nav-link">Productos</a>
-                            <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
-                            <a href="ventas.html" class="nav-item nav-link">Ventas</a>
+                            <a href="index.jsp" class="nav-item nav-link active">Home</a>
+                            <a href="tienda.jsp" class="nav-item nav-link">Productos</a>
+                            <a href="clientes.jsp" class="nav-item nav-link">Nuestros Clientes</a>
+                            <a href="ventas.jsp" class="nav-item nav-link">Ventas</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administración <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <a href="clientesAdmin.html" class="dropdown-item">Clientes</a>
-                                    <a href="discosAdmin.html" class="dropdown-item">Discos</a>
+                                    <a href="clientesAdmin.jsp" class="dropdown-item">Clientes</a>
+                                    <a href="discosAdmin.jsp" class="dropdown-item">Discos</a>
                                 </div>
                             </div>
                         </div>         
@@ -100,7 +104,7 @@
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="index2.html">Home</a>
+                    <a class="breadcrumb-item text-dark" href="index.jsp">Home</a>
                     <span class="breadcrumb-item text-dark">Nuestros Clientes</span>
                 </nav>
             </div>
@@ -121,21 +125,27 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Dni</th>
-                            <th>Telefono</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
                         <!-- CODIGO JAVA -->
                         <!-- FOR EACH DE CADA CLIENTE COGER DATOS -->
-                        
+                        <%int cont = 1;
+                        for (Cliente c : clientes) {
+                        %>
                         
                             <tr>
-                                <td class="align-middle">1</td>
-                                <td class="align-middle">Rodrigo </td>
-                                <td class="align-middle">Fernandez</td>
-                                <td class="align-middle">51243654F</td>
-                                <td class="align-middle">+34646465498</td>
+                                <td class="align-middle"><%=cont%></td>
+                                <td class="align-middle"><%=c.getNombre()%> </td>
+                                <td class="align-middle"><%=c.getApellidos()%></td>
+                                <td class="align-middle"><%=c.getDni()%></td>
+                                <td class="align-middle"><%=c.getDireccion()%></td>
+                                <td class="align-middle"><%=c.getTelefono()%></td>
                             </tr>
+                            <%cont++;
+                            } %>
                         <!-- FIN -->
                     </tbody>
                 </table>
@@ -161,10 +171,10 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="index2.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="tienda.html"><i class="fa fa-angle-right mr-2"></i>Productos</a>
-                            <a class="text-secondary mb-2" href="clientes.html"><i class="fa fa-angle-right mr-2"></i>Nuestros Clientes</a>
-                            <a class="text-secondary mb-2" href="ventas.html"><i class="fa fa-angle-right mr-2"></i>Ventas</a>
+                            <a class="text-secondary mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="tienda.jsp"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                            <a class="text-secondary mb-2" href="clientes.jsp"><i class="fa fa-angle-right mr-2"></i>Nuestros Clientes</a>
+                            <a class="text-secondary mb-2" href="ventas.jsp"><i class="fa fa-angle-right mr-2"></i>Ventas</a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">

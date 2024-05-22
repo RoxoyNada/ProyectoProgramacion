@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+  
+    <%@ page import = "java.util.*" %>
+    <%@ page import = "clasesProyecto.*" %>
+
+
 <!DOCTYPE html>
 <html>
 
-
+<% DBController controlador = new DBController(); %>
 <head>
     <meta charset="utf-8">
     <title>MultiShop - Online Shop Website Template</title>
@@ -75,8 +80,8 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index2.html" class="nav-item nav-link active">Home</a>
-                            <a href="tienda.html" class="nav-item nav-link">Productos</a>
+                            <a href="index.jsp" class="nav-item nav-link active">Home</a>
+                            <a href="tienda.jsp" class="nav-item nav-link">Productos</a>
                             <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
                             <a href="ventas.html" class="nav-item nav-link">Ventas</a>
                             <div class="nav-item dropdown">
@@ -258,31 +263,40 @@
 
             <!-- CODIGO JAVA -->
             <!-- 8  - 12 productos cuales quiera -->
+            <% ArrayList<Disco> discos = controlador.todosDiscos();
+            for(int i = 0; i<8; i++){%>
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                        <img class="img-fluid w-100" src="img/<%=discos.get(i).getIdDisco()%>.jpg" alt="">
                         <div class="product-action">
                                     <!-- CODIGO JAVA -->
                                     <!-- modificar href's= para que coincida con la pagina y mande los datos-->
-                                    <a class="btn btn-outline-dark btn-square" href="detalles.html"><i class="far fa-eye"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href="modDisco.html"><i class="fas fa-edit"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fas fa-trash"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="detalles.jsp?idDisco=<%=discos.get(i).getIdDisco()%>"><i class="far fa-eye"></i></a>
+                         <!--        <a class="btn btn-outline-dark btn-square" href="modDisco.html"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fas fa-trash"></i></a>  -->
                         </div>
 
                     </div>
                     <div class="text-center py-4">
                         <!-- CODIGO JAVA -->
                         <!-- modificar href= para que coincida con la pagina y mande los datos-->
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                        <a class="h6 text-decoration-none text-truncate" href=""><%=discos.get(i).getNombre() %></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                         <!-- CODIGO JAVA -->
                         <!-- CAMBIAR PRECIO SEGUN ARTICULO-->
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                        
+                            <% int desc = controlador.dameDescuentoDisco(discos.get(i).getIdDisco()); %>
+                       		 <% if (desc > 0){ %>
+                            <h5><%=discos.get(i).getPrecio() - (discos.get(i).getPrecio() * desc / 100)%>$</h5><h6 class="text-muted ml-2"><del><%=discos.get(i).getPrecio()%>$</del></h6>
+                            <%}else{ %>
+                            	<h5><%=discos.get(i).getPrecio() %>$</h5>
+                            <%} %>
                         </div>
                     </div>
                 </div>
             </div>
+            <%} %>
         </div>
     </div>
     <!-- Products End -->
@@ -320,32 +334,44 @@
 
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Ultimos Productos</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Últimas Unidades</span></h2>
         <div class="row px-xl-5">
             <!-- CODIGO JAVA -->
-            <!-- 6 Discos más recientes-->
+            <!-- 6 Discos más ULTIMAS UDS-->
+            
+            <%ArrayList<Disco> discosUltimas = controlador.dameDiscosOrdenStock(); %>
+            
+            
+            <%for (int i = 0; i < 8 ; i++){ %>
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                        <img class="img-fluid w-100" src="./img/<%=discosUltimas.get(i).getIdDisco()%>.jpg" alt="">
                         <div class="product-action">
                                     <!-- CODIGO JAVA -->
                                     <!-- modificar href= para que coincida con la pagina y mande los datos-->
-                                    <a class="btn btn-outline-dark btn-square" href="detalles.html"><i class="far fa-eye"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href="modDisco.html"><i class="fas fa-edit"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-trash"></i></a>
+                                    
+                                    <a class="btn btn-outline-dark btn-square" href="detalles.jsp?idDisco =<%=discosUltimas.get(i).getIdDisco()%>"><i class="far fa-eye"></i></a>
+                            <!--        <a class="btn btn-outline-dark btn-square" href="modDisco.html"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fas fa-trash"></i></a>    -->  
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                        <a class="h6 text-decoration-none text-truncate" href=""><%=discosUltimas.get(i).getNombre()%></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                         <!-- CODIGO JAVA -->
                         <!-- CAMBIAR PRECIO SEGUN ARTICULO-->
-                            <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                        <% int desc = controlador.dameDescuentoDisco(discosUltimas.get(i).getIdDisco()); %>
+                        <% if (desc > 0){ %>
+                            <h5><%=discosUltimas.get(i).getPrecio() - (discosUltimas.get(i).getPrecio() * desc / 100)%>$</h5><h6 class="text-muted ml-2"><del><%=discosUltimas.get(i).getPrecio()%>$</del></h6>
+                            <%}else{ %>
+                            	<h5><%=discosUltimas.get(i).getPrecio() %>$</h5>
+                            <%} %>
                         </div>
                     </div>
                 </div>
             </div>
+            <%} %>
         </div>
     </div>
     <!-- Products End -->
@@ -390,7 +416,7 @@
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <h5 class="text-secondary text-uppercase mb-4">¿Quienes Somos?</h5>
-                <p class="mb-4">Bienvenidos a Ayerdi Records &reg;: Tu destino para vinilos, CDs y ediciones especiales. Descubre la banda sonora de tus recuerdos con nosotros.  </p>
+                <p class="mb-4">Bienvenidos a Ayerdi Records: Tu destino para vinilos, CDs y ediciones especiales. Descubre la banda sonora de tus recuerdos con nosotros.  </p>
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Calle Donoso Cortés, 61</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>iayerdi@centronelson.org</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>rfernandez@centronelson.org</p>
@@ -432,7 +458,7 @@
         <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-secondary">
-                    &copy; <a class="text-primary" href="#">AyerdiRecords</a>. Todos los derechos reservados
+                   <a class="text-primary" href="#">AyerdiRecords</a>. Todos los derechos reservados
                     <a class="text-primary" href="https://htmlcodex.com">Ayerdi Records </a>
                 </p>
             </div>
