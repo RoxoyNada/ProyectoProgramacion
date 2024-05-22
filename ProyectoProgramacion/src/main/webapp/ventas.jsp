@@ -1,7 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+  
+    <%@ page import = "java.util.*" %>
+    <%@ page import = "clasesProyecto.*" %>
+
+
 <!DOCTYPE html>
 <html>
+
+<% int idVenta = -1; 
+float suma = 0;
+DBController controlador = new DBController(); 
+ArrayList<Venta> ventas = controlador.todosVentas();
+if(request.getParameter("idVenta") != null){
+	idVenta = Integer.parseInt(request.getParameter("idVenta"));
+}%>
 <head>
     <meta charset="utf-8">
     <title>MultiShop - Online Shop Website Template</title>
@@ -9,7 +22,7 @@
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
-    <!-- Favicon -->
+    <!-- Favicon --> 
     <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
@@ -49,7 +62,7 @@
                 </form>
             </div>
             <div class="col-lg-4 col-6 text-right">
-                <p class="m-0">Atención Al Cliente</p>
+                <p class="m-0">AtenciÃ³n Al Cliente</p>
                 <h5 class="m-0">+34 646 26 58 52</h5>
             </div>
         </div>
@@ -72,15 +85,15 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index2.html" class="nav-item nav-link active">Home</a>
-                            <a href="tienda.html" class="nav-item nav-link">Productos</a>
-                            <a href="clientes.html" class="nav-item nav-link">Nuestros Clientes</a>
-                            <a href="ventas.html" class="nav-item nav-link">Ventas</a>
+                            <a href="index.jsp" class="nav-item nav-link active">Home</a>
+                            <a href="tienda.jsp" class="nav-item nav-link">Productos</a>
+                            <a href="clientes.jsp" class="nav-item nav-link">Nuestros Clientes</a>
+                            <a href="ventas.jsp" class="nav-item nav-link">Ventas</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administración <i class="fa fa-angle-down mt-1"></i></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">AdministraciÃ³n <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <a href="clientesAdmin.html" class="dropdown-item">Clientes</a>
-                                    <a href="discosAdmin.html" class="dropdown-item">Ventas</a>
+                                    <a href="clientesAdmin.jsp" class="dropdown-item">Clientes</a>
+                                    <a href="discosAdmin.jsp" class="dropdown-item">Ventas</a>
                                 </div>
                             </div>
                         </div>         
@@ -96,7 +109,7 @@
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="index2.html">Home</a>
+                    <a class="breadcrumb-item text-dark" href="index.jsp">Home</a>
                     <span class="breadcrumb-item active">Ventas</span>
                 </nav>
             </div>
@@ -119,16 +132,21 @@
                                     <i class="fa fa-angle-down text-dark"></i>
                                 </a>
                                 <nav class="collapse  align-items-start p-0 bg-light" id="ventas" style="width:100%;">
+                                <%for (Venta v : ventas){ %>
                                     <div class="navbar-nav w-100">
                                         <!-- CODIGO JAVA -->
                                         <!-- BUCLE CON VENTAS -->
                                         <!-- CAMBIAR HREF POR OPERACIONES.JSP -->
-                                        <a class="sale_data" href="checkout.html" class="nav-item nav-link" style="padding: 1rem 0; ">
-                                            <span class="span-venta">Nombre CLiente</span>
-                                            <span class="span-venta">Fecha </span>
-                                            <span class="span-venta">Precio Venta</span>
+                                        
+                                        <a class="sale_data" href="ventas.jsp?idVenta=<%=v.getIdVenta()%>" class="nav-item nav-link" style="padding: 1rem 0; ">
+                                            <span class="span-venta"><%=controlador.dameCliente(v.getIdCliente()).getNombre() %>  <%=controlador.dameCliente(v.getIdCliente()).getApellidos()%></span>
+                                            
+                                            <span class="span-venta"><%=v.getFechaVenta() %> </span>
+                                            <span class="span-venta"><%=v.getPrecioVenta() %> $</span>
                                         </a>
+                                      
                                     </div>
+                                      <%} %>
                                 </nav>
                             </th>
                         </tr>
@@ -136,25 +154,26 @@
             </div>
             <div class="col-lg-4">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Resumen Venta</span></h5>
+               	<% if(idVenta == -1){ %>
                 <div class="bg-light p-30 mb-5">
+                
                     <div class="border-bottom" style="display:flex; gap: 0.5rem; flex-direction: column;">
                         <!-- CODIGO JAVA -->
                         <!-- DATOS LINEAS VENTA DE UNA VENTA -->
-                        <h5 class="mb-3" style="text-align: end;">Venta #00055</h5>
-                        <h6 class="mb-3">Products</h6>
+                        <h5 class="mb-3" style="text-align: end;">Venta #00000</h5>
+                        <h6 class="mb-3">Discos</h6>
 
                         <!-- CODIGO JAVA -->
                         <!-- FOR EACH LINEA VENTA -->
                         <div class="d-flex justify-content-between">
-                            <p>Product Name 1</p>
-                            <p>$150</p>
+                            
                         </div>
                         <!-- END FOR EACH -->
                     </div>
                     <div class="border-bottom pt-3 pb-2">
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Subtotal</h6>
-                            <h6>$150</h6>
+                            <h6>$0</h6>
                         </div>
                     </div>
                     <div class="pt-2">
@@ -162,10 +181,44 @@
                         <!-- CODIGO JAVA -->
                         <!-- SUMA DE TODAS LAS LINEAS DE VENTA O PRECIO VENTA -->
                             <h5>Total</h5>
-                            <h5>$160</h5>
+                            <h5>$0</h5>
                         </div>
                     </div>
                 </div>
+                <%}else{ %>
+                 <div class="bg-light p-30 mb-5">
+                
+                    <div class="border-bottom" style="display:flex; gap: 0.5rem; flex-direction: column;">
+                        <!-- CODIGO JAVA -->
+                        <!-- DATOS LINEAS VENTA DE UNA VENTA -->
+                        <h5 class="mb-3" style="text-align: left; display: in-line;">Nombre: <%=controlador.dameCliente(controlador.dameVenta(idVenta).getIdCliente()).getNombre()%>  <%=controlador.dameCliente(controlador.dameVenta(idVenta).getIdCliente()).getApellidos()%></h5>
+                        <h5 class="mb-3" style="text-align: end; display: in-line;">Venta #000<%=idVenta%></h5>
+                        <h6 class="mb-3">Discos</h6>
+
+                        <!-- CODIGO JAVA -->
+                        <!-- FOR EACH LINEA VENTA -->
+                        <% ArrayList<LVenta> lineas = controlador.dameLventasVentas(idVenta);
+                        for (LVenta lv : lineas){%>
+                        <div class="d-flex justify-content-between">
+                            <p><%=controlador.dameDisco(lv.getIdDisco()).getNombre() %></p>
+                             <p>x <%= lv.getUnidades() %></p>
+                            <p><%=lv.getPrecioLinea() %> $</p>
+                        </div>
+                        <% suma += lv.getPrecioLinea() ;
+                            } %>
+                        <!-- END FOR EACH -->
+                    </div>
+                    
+                    <div class="pt-2">
+                        <div class="d-flex justify-content-between mt-2">
+                        <!-- CODIGO JAVA -->
+                        <!-- SUMA DE TODAS LAS LINEAS DE VENTA O PRECIO VENTA -->
+                            <h5>Total</h5>
+                            <h5><%=suma%> $</h5>
+                        </div>
+                    </div>
+                </div>
+                <%} %>
             </div>
         </div>
     </div>
@@ -176,9 +229,9 @@
     <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <h5 class="text-secondary text-uppercase mb-4">¿Quienes Somos?</h5>
-                <p class="mb-4">Bienvenidos a Ayerdi Records &reg;: Tu destino para vinilos, CDs y ediciones especiales. Descubre la banda sonora de tus recuerdos con nosotros.  </p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Calle Donoso Cortés, 61</p>
+                <h5 class="text-secondary text-uppercase mb-4">Â¿Quienes Somos?</h5>
+                <p class="mb-4">Bienvenidos a Ayerdi Records: Tu destino para vinilos, CDs y ediciones especiales. Descubre la banda sonora de tus recuerdos con nosotros.  </p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Calle Donoso CortÃ©s, 61</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>iayerdi@centronelson.org</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>rfernandez@centronelson.org</p>
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+34 646 26 58 52</p>
@@ -188,15 +241,15 @@
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-secondary mb-2" href="index2.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-secondary mb-2" href="tienda.html"><i class="fa fa-angle-right mr-2"></i>Productos</a>
-                            <a class="text-secondary mb-2" href="clientes.html"><i class="fa fa-angle-right mr-2"></i>Nuestros Clientes</a>
-                            <a class="text-secondary mb-2" href="ventas.html"><i class="fa fa-angle-right mr-2"></i>Ventas</a>
+                            <a class="text-secondary mb-2" href="index.jsp"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="tienda.jsp"><i class="fa fa-angle-right mr-2"></i>Productos</a>
+                            <a class="text-secondary mb-2" href="clientes.jsp"><i class="fa fa-angle-right mr-2"></i>Nuestros Clientes</a>
+                            <a class="text-secondary mb-2" href="ventas.jsp"><i class="fa fa-angle-right mr-2"></i>Ventas</a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">
                         <h5 class="text-secondary text-uppercase mb-4">Noticias</h5>
-                        <p>Suscribete a nuestro boletín mensual</p>
+                        <p>Suscribete a nuestro boletÃ­n mensual</p>
                         <form action="#">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Your Email Address">
@@ -219,7 +272,7 @@
         <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-secondary">
-                    &copy; <a class="text-primary" href="#">AyerdiRecords</a>. Todos los derechos reservados
+                    <a class="text-primary" href="#">AyerdiRecords</a>. Todos los derechos reservados
                     <a class="text-primary" href="https://htmlcodex.com">Ayerdi Records </a>
                 </p>
             </div>
