@@ -9770,3 +9770,42 @@ a.text-dark:hover, a.text-dark:focus {
 .span-venta{
   color: #000;
 }
+
+
+.custom-table-container {
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid #343a40;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.custom-table thead {
+  background-color: #343a40;
+}
+.custom-table thead th {
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+}
+.custom-table tbody tr:nth-child(even) {
+  background-color: #e2e2e2;
+}
+
+.custom-table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.custom-table tbody tr:nth-child(even){
+  background-color: #dfdfdf;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #ffdfdf;
+}
