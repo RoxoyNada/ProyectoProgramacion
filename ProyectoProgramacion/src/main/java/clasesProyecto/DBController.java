@@ -7,7 +7,7 @@ public class DBController {
 	private Connection conexion;
 
 	/**
-	 * 
+	 *  
 	 */
 	public DBController() {
 		super();
@@ -57,7 +57,7 @@ public class DBController {
 	
 	public boolean altaDisco(Disco d) {
 		Boolean correcto = false;
-		String sql = "Insert INTO discos set nombre = '"+d.getNombre()+"' , idGrup = '"+d.getIdGrupo()+"' , fecha = '"+d.getFecha()+"' , precio = '"+d.getPrecio()+"', descripcion = '"+d.getDescripcion()+"'";
+		String sql = "Insert INTO discos set nombre = '"+d.getNombre()+"' , idGrupo = '"+d.getIdGrupo()+"' , fecha = '"+d.getFecha()+"' , precio = '"+d.getPrecio()+"', descripcion = '"+d.getDescripcion()+"'";
 		try {
 			Statement myStatement = this.conexion.createStatement();
 			correcto = true;
@@ -187,6 +187,24 @@ public class DBController {
 		return esta;
 	}
 	
+	public Disco dameDisco(int idDisco) {
+		String sql = "select * FROM  discos WHERE  idDisco = '"+idDisco+"'";
+		Disco d = new Disco();
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while(rs.next()) {
+				 d = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrupo"), rs.getFloat("precio"), rs.getString("descripcion"));
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return d;
+	}
+	
 	public boolean existeGrupo(int idGrupo) {
 		String sql = "select * FROM  grupos WHERE  idGrupo = '"+idGrupo+"'";
 		boolean esta = false;
@@ -290,14 +308,14 @@ public class DBController {
 	}
 	
 	public ArrayList<Venta> dameVentasCliente(int idCliente) {
-		String sql = "SELECT * FROM ventas WHERE idClieente = '"+idCliente+"'"; 
+		String sql = "SELECT * FROM ventas WHERE idCliente = '"+idCliente+"'"; 
 		ArrayList<Venta> ventas = new ArrayList<Venta>();
 		try {
 			Statement myStatement = this.conexion.createStatement();
 			ResultSet rs = myStatement.executeQuery(sql);
 			while (rs.next()) {
 				int idVenta = rs.getInt("idVenta");
-				Venta venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), dameLventasDisco(idVenta));
+				Venta venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), dameLventasVentas(idVenta));
 				ventas.add(venta);
 			}
 			rs.close();
@@ -310,6 +328,27 @@ public class DBController {
 		return ventas;
 	}
 	
+	public Venta dameVenta(int idVenta) {
+		String sql = "SELECT * FROM ventas WHERE idVenta = " +idVenta; 
+		Venta venta = new Venta();
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while (rs.next()) {
+				
+				 venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), dameLventasVentas(idVenta));
+				
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return venta;
+	}
+	
 	public ArrayList<Disco> todosDiscos(){
 		ArrayList<Disco> discos = new ArrayList<Disco>();
 		String sql = "Select * FROM discos";
@@ -318,7 +357,7 @@ public class DBController {
 			ResultSet rs = myStatement.executeQuery(sql);
 			
 			while (rs.next()) {
-				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrupo"), rs.getFloat("precio"), rs.getString("descripcion"));
 				discos.add(disco);
 			}
 			rs.close();
@@ -340,7 +379,7 @@ public class DBController {
 			ResultSet rs = myStatement.executeQuery(sql);
 			
 			while (rs.next()) {
-				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrupo"), rs.getFloat("precio"), rs.getString("descripcion"));
 				discos.add(disco);
 			}
 			rs.close();
@@ -354,15 +393,15 @@ public class DBController {
 		return discos;
 	}
 	
-	public ArrayList<Disco> dameDiscosRecientes(){
+	public ArrayList<Disco> dameNDiscosMasNuevos(int n){
 		ArrayList<Disco> discos = new ArrayList<Disco>();
-		String sql = "Select * FROM discos  ORDER BY discos.fecha desc ";
+		String sql = "Select * FROM discos WHERE ORDER BY fecha desc limit "+n;
 		try {
 			Statement myStatement = this.conexion.createStatement();
 			ResultSet rs = myStatement.executeQuery(sql);
 			
 			while (rs.next()) {
-				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrupo"), rs.getFloat("precio"), rs.getString("descripcion"));
 				discos.add(disco);
 			}
 			rs.close();
@@ -374,6 +413,68 @@ public class DBController {
 		
 
 		return discos;
+	}
+	
+	public ArrayList<Disco> dameDiscosOrdenStock(){
+		ArrayList<Disco> discos = new ArrayList<Disco>();
+		String sql = "Select * FROM discos  ORDER BY stock ASC";
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrupo"), rs.getFloat("precio"), rs.getString("descripcion"));
+				discos.add(disco);
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return discos;
+	}
+	
+	public int dameStockDisco(int idDisco) {
+		int stock = 0;
+		String sql = "SELECT stock FROM discos WHERE idDisco = " + idDisco;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while(rs.next()) {
+				stock = rs.getInt("stock");
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return stock;
+		
+	}
+	
+	public int dameDescuentoDisco(int idDisco) {
+		int desc = 0;
+		String sql = "SELECT Descuento FROM discos WHERE idDisco = " + idDisco;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			while(rs.next()) {
+				desc = rs.getInt("Descuento");
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return desc;
+		
 	}
 	
 	public ArrayList<Disco> dameDiscosRangoPrecio(int precioMin, int precioMax){
@@ -384,7 +485,7 @@ public class DBController {
 			ResultSet rs = myStatement.executeQuery(sql);
 			
 			while (rs.next()) {
-				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrupo"), rs.getFloat("precio"), rs.getString("descripcion"));
 				discos.add(disco);
 			}
 			rs.close();
@@ -398,8 +499,8 @@ public class DBController {
 		return discos;
 	}
 	
-	public int dameNumDiscosGrupo(int idGrup) {
-		String sql = "SELECT COUNT(*) FROM discos WHERE idGrup ="+idGrup;
+	public int dameNumDiscosGrupo(int idGrupo) {
+		String sql = "SELECT COUNT(*) FROM discos WHERE idGrupo ="+idGrupo;
 		int cantidad = 0;
 		try {
 			Statement myStatement = this.conexion.createStatement();
@@ -425,7 +526,7 @@ public class DBController {
 			ResultSet rs = myStatement.executeQuery(sql);
 			
 			while (rs.next()) {
-				LVenta lventa = new LVenta(rs.getInt("idLVenta"), rs.getInt("idVenta"), rs.getInt("unidades"),rs.getFloat("precioLinea"),rs.getInt("idDiscos"));
+				LVenta lventa = new LVenta(rs.getInt("idLVenta"), rs.getInt("idVenta"), rs.getInt("unidades"),rs.getFloat("precioLinea"),rs.getInt("idDisco"));
 				lventas.add(lventa);
 			}
 			rs.close();
@@ -437,6 +538,7 @@ public class DBController {
 	
 	return lventas;
 }
+	
 	public ArrayList<Cancion> todasCanciones(){
 		ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 		String sql = "Select * FROM canciones";
@@ -481,20 +583,34 @@ public class DBController {
 	
 	public Cliente dameCliente(int id) {
 		Cliente cliente = new Cliente();
+		String sql = "Select * FROM clientes WHERE idCliente = " + id;;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				cliente = new Cliente(rs.getInt("idCliente"), rs.getString("dni"),rs.getString("nombre"), rs.getString("apellidos"), rs.getString("direccion"), rs.getString("telefono"));
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return cliente;
 	}
 	
 	public ArrayList<Venta> todosVentas(){
 		ArrayList<Venta> ventas = new ArrayList<Venta>();
-		String sql = "Select * FROM ventas";
+		String sql = "Select * FROM ventas ORDER by idCliente ASC, fechaVenta DESC";
 		try {
 			Statement myStatement = this.conexion.createStatement();
 			ResultSet rs = myStatement.executeQuery(sql);
 			
 			while (rs.next()) {
 				int idVenta = rs.getInt("idVenta");
-				Venta venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), dameLventasDisco(idVenta));
+				Venta venta = new Venta(idVenta, rs.getString("fechaVenta"),rs.getInt("idCliente"), rs.getFloat("precioVenta"), dameLventasVentas(idVenta));
 				ventas.add(venta);
 			}
 			rs.close();
@@ -528,7 +644,27 @@ public class DBController {
 		return grupos;
 	}
 	
-	public ArrayList<LVenta> dameLventasDisco(int idVenta){
+	public Grupo dameGrupo(int idGrupo){
+		Grupo grupo = new Grupo();
+		String sql = "Select * FROM grupos WHERE idGrupo = " + idGrupo;
+		try {
+			Statement myStatement = this.conexion.createStatement();
+			ResultSet rs = myStatement.executeQuery(sql);
+			
+			while (rs.next()) {
+				 grupo = new Grupo(rs.getInt("idGrupo"), rs.getString("nombre"),rs.getString("pais"));
+			}
+			rs.close();
+			myStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return grupo;
+	}
+	
+	public ArrayList<LVenta> dameLventasVentas(int idVenta){
 		ArrayList<LVenta> lventas = new ArrayList<LVenta>();
 		String sql = "Select * FROM lventas WHERE idVenta = '"+idVenta+"'";
 		try {
@@ -537,7 +673,7 @@ public class DBController {
 			
 			while (rs.next()) {
 				
-				LVenta lventa = new LVenta(rs.getInt("idLVenta"), rs.getInt("idVenta"), rs.getInt("unidades"),rs.getFloat("precioLinea"),rs.getInt("idDiscos"));
+				LVenta lventa = new LVenta(rs.getInt("idLVenta"), rs.getInt("idVenta"), rs.getInt("unidades"),rs.getFloat("precioLinea"),rs.getInt("idDisco"));
 				lventas.add(lventa);
 			}
 			rs.close();
@@ -552,14 +688,14 @@ public class DBController {
  
 	public ArrayList<Disco> nDiscosMasVendidos(int numero) {
 		ArrayList<Disco> discos = new ArrayList<Disco>();
-		String sql = "select discos.* from discos inner join lventas as l on discos.idDisco = l.idDisco GROUP BY l.idDisco ORDER BY (sum(l.unidades)) DESC limit '"+numero+"')";
+		String sql = "select * from discos inner join lventas as l on discos.idDisco = l.idDisco GROUP BY l.idDisco ORDER BY (sum(l.unidades)) DESC limit '"+numero+"')";
 		
 		try {
 			Statement myStatement = this.conexion.createStatement();
 			ResultSet rs = myStatement.executeQuery(sql);
 			
 			while (rs.next()) {
-				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrup"), rs.getFloat("precio"), rs.getString("descripcion"));
+				Disco disco = new Disco (rs.getInt("idDisco"), rs.getString("nombre"), rs.getString("fecha"), rs.getInt("idGrupo"), rs.getFloat("precio"), rs.getString("descripcion"));
 				discos.add(disco);
 			}
 			rs.close();
